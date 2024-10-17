@@ -27,7 +27,6 @@
         }
 
         button {
-            background-color: black; /* Same as the player background */
             border: none;
             padding: 0; /* No padding */
             cursor: pointer;
@@ -36,11 +35,21 @@
             height: 40px; /* Fixed height for buttons */
             position: relative;
             font-size: 30px; /* Size for symbols */
-            color: white; /* Color of symbols */
+            border-radius: 5px; /* Slightly rounded corners */
         }
 
         button:hover {
             background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background on hover */
+        }
+
+        .play, .pause {
+            background-color: white; /* White background for the play and pause buttons */
+            color: black; /* Black symbol */
+        }
+
+        .prev, .next {
+            background-color: white; /* White background for previous and next buttons */
+            color: black; /* Black symbol */
         }
 
         .play::before {
@@ -70,31 +79,29 @@
         .prev::before {
             content: '⏮'; /* Symbol for previous */
             font-size: 30px; /* Adjust size as needed */
-            color: white; /* Color of the symbol */
+            color: black; /* Color of the symbol */
             position: absolute;
-            left: 0; /* Align to left */
-            top: 0; /* Align to top */
-            width: 100%; /* Full width of button */
-            height: 100%; /* Full height of button */
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
             display: flex;
             justify-content: center; /* Center the symbol */
             align-items: center;
-            font-weight: bold; /* Make symbol bold */
         }
 
         .next::before {
             content: '⏭'; /* Symbol for next */
             font-size: 30px; /* Adjust size as needed */
-            color: white; /* Color of the symbol */
+            color: black; /* Color of the symbol */
             position: absolute;
-            right: 0; /* Align to right */
-            top: 0; /* Align to top */
-            width: 100%; /* Full width of button */
-            height: 100%; /* Full height of button */
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
             display: flex;
             justify-content: center; /* Center the symbol */
             align-items: center;
-            font-weight: bold; /* Make symbol bold */
         }
     </style>
 </head>
