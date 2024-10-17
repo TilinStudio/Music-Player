@@ -18,13 +18,20 @@
         .player {
             background-color: black;
             width: 300px; /* Width of the player */
-            height: 100px; /* Height of the player */
+            height: 130px; /* Height of the player increased to accommodate progress bar */
             border-radius: 10px;
             display: flex;
-            flex-direction: row; /* Row layout for buttons */
-            justify-content: space-around; /* Space buttons evenly */
+            flex-direction: column; /* Stack buttons and progress bar */
+            justify-content: center;
             align-items: center;
             position: relative; /* For positioning buttons */
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-around; /* Space buttons evenly */
+            align-items: center;
+            width: 100%;
         }
 
         button {
@@ -115,11 +122,11 @@
 
         /* Progress bar container */
         .progress-container {
-            width: 300px; /* Same width as the player */
+            width: 220px; /* Adjust width to match the buttons */
             height: 10px;
             background-color: #ddd;
             border-radius: 5px;
-            margin-top: 15px;
+            margin-top: 10px;
             cursor: pointer;
             position: relative;
         }
@@ -147,17 +154,20 @@
 </head>
 <body>
     <div class="player">
-        <button id="prevBtn" class="prev" style="margin-right: 20px;"></button> <!-- Button for previous track -->
-        <button id="playPauseBtn" class="play"></button> <!-- Initial button state is Play -->
-        <button id="nextBtn" class="next" style="margin-left: 20px;"></button> <!-- Button for next track -->
-        <audio id="audio" preload="auto"></audio>
+        <div class="controls">
+            <button id="prevBtn" class="prev" style="margin-right: 20px;"></button> <!-- Button for previous track -->
+            <button id="playPauseBtn" class="play"></button> <!-- Initial button state is Play -->
+            <button id="nextBtn" class="next" style="margin-left: 20px;"></button> <!-- Button for next track -->
+        </div>
+
+        <!-- Progress bar container -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+            <div class="progress-dot"></div>
+        </div>
     </div>
 
-    <!-- Progress bar container -->
-    <div class="progress-container">
-        <div class="progress-bar"></div>
-        <div class="progress-dot"></div>
-    </div>
+    <audio id="audio" preload="auto"></audio>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -171,16 +181,16 @@
 
             // Remplacez ces URLs par celles de votre playlist audio .mp3
             const audioUrls = [
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3', // Remplacez avec les liens directs vers vos fichiers audio
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'URL_DU_FICHIER_1.mp3', // Remplacez avec les liens directs vers vos fichiers audio
+                'URL_DU_FICHIER_2.mp3',
+                'URL_DU_FICHIER_3.mp3',
+                'URL_DU_FICHIER_4.mp3',
+                'URL_DU_FICHIER_5.mp3',
+                'URL_DU_FICHIER_6.mp3',
+                'URL_DU_FICHIER_7.mp3',
+                'URL_DU_FICHIER_8.mp3',
+                'URL_DU_FICHIER_9.mp3',
+                'URL_DU_FICHIER_10.mp3',
             ];
 
             let currentTrack = 0; // Track index
