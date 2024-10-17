@@ -1,0 +1,164 @@
+<html>
+<head>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.3.1/css/all.css'>
+<link rel="stylesheet" href="./style.css">
+    <style>
+        /* [Code CSS non modifié pour l'affichage du lecteur] */
+    </style>
+</head>
+<body>
+
+    <div id="app-cover">
+        <div id="bg-artwork"></div>
+        <div id="bg-layer"></div>
+        <div id="player">
+            <div id="player-track">
+                <div id="album-name"></div>
+                <div id="track-name"></div>
+                <div id="track-time">
+                    <div id="current-time"></div>
+                    <div id="track-length"></div>
+                </div>
+                <div id="s-area">
+                    <div id="ins-time"></div>
+                    <div id="s-hover"></div>
+                    <div id="seek-bar"></div>
+                </div>
+            </div>
+            <div id="player-content">
+                <div id="album-art">
+                    <img src="https://i.pinimg.com/736x/94/dd/e1/94dde1ac061851a9bd525755457f26f0.jpg" class="active" id="_1">
+                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_2.jpg" id="_2">
+                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_3.jpg" id="_3">
+                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_4.jpg" id="_4">
+                    <img src="https://raw.githubusercontent.com/himalayasingh/music-player-1/master/img/_5.jpg" id="_5">
+                    <div id="buffer-box">Buffering ...</div>
+                </div>
+                <div id="player-controls">
+                    <div class="control">
+                        <div class="button" id="play-previous">
+                            <i class="fas fa-backward"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-pause-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <div class="button" id="play-next">
+                            <i class="fas fa-forward"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    var playerTrack = $("#player-track"), 
+        albumName = $('#album-name'), 
+        trackName = $('#track-name'), 
+        albumArt = $('#album-art'), 
+        seekBar = $('#seek-bar'), 
+        trackTime = $('#track-time'), 
+        tProgress = $('#current-time'), 
+        tTime = $('#track-length'), 
+        playPauseButton = $("#play-pause-button"),  
+        i = playPauseButton.find('i'), 
+        currIndex = -1, 
+        audio, 
+        isLooping = true;  // Activation du mode boucle
+
+    var albums = ['my magic shop','Me & You','Electro Boy','Home','Proxy (Original Mix)'],
+        trackNames = ['you gave me the best of me','Alex Skrindo - Me & You','Kaaze - Electro Boy','Jordan Schor - Home','Martin Garrix - Proxy'],
+        albumArtworks = ['_1','_2','_3','_4','_5'],
+        trackUrl = [
+            'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+            'https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/1.mp3',
+            'https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/3.mp3',
+            'https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/4.mp3',
+            'https://raw.githubusercontent.com/himalayasingh/music-player-1/master/music/5.mp3'
+        ];
+
+    function playPause() {
+        setTimeout(function() {
+            if (audio.paused) {
+                i.attr('class','fas fa-pause');
+                audio.play();
+            } else {
+                i.attr('class','fas fa-play');
+                audio.pause();
+            }
+        }, 300);
+    }
+
+    function updateCurrTime() {
+        var curMinutes = Math.floor(audio.currentTime / 60),
+            curSeconds = Math.floor(audio.currentTime - curMinutes * 60),
+            durMinutes = Math.floor(audio.duration / 60),
+            durSeconds = Math.floor(audio.duration - durMinutes * 60),
+            playProgress = (audio.currentTime / audio.duration) * 100;
+
+        if (curMinutes < 10) curMinutes = '0' + curMinutes;
+        if (curSeconds < 10) curSeconds = '0' + curSeconds;
+
+        if (durMinutes < 10) durMinutes = '0' + durMinutes;
+        if (durSeconds < 10) durSeconds = '0' + durSeconds;
+
+        tProgress.text(curMinutes + ':' + curSeconds);
+        tTime.text(durMinutes + ':' + durSeconds);
+        seekBar.width(playProgress + '%');
+
+        if (playProgress == 100) {
+            if (isLooping) {
+                selectTrack(1);  // Passe à la piste suivante (ou recommence)
+            } else {
+                i.attr('class','fas fa-play');
+            }
+        }
+    }
+
+    function selectTrack(flag) {
+        if (flag == 0 || flag == 1) {
+            ++currIndex;
+        } else {
+            --currIndex;
+        }
+
+        if (currIndex >= albumArtworks.length) {
+            currIndex = 0;  // Boucle au début de la playlist
+        } else if (currIndex < 0) {
+            currIndex = albumArtworks.length - 1;
+        }
+
+        albumArt.find('img.active').removeClass('active');
+        $('#'+albumArtworks[currIndex]).addClass('active');
+        
+        audio.src = trackUrl[currIndex];
+        trackName.text(trackNames[currIndex]);
+        albumName.text(albums[currIndex]);
+
+        if (flag != 0) {
+            audio.play();
+            i.attr('class','fas fa-pause');
+        }
+    }
+
+    function initPlayer() {
+        audio = new Audio();
+        audio.loop = false;  // Le mode loop est géré manuellement
+        selectTrack(0);
+        playPauseButton.on('click', playPause);
+        $(audio).on('timeupdate', updateCurrTime);
+        $('#play-previous').on('click', function() { selectTrack(-1); });
+        $('#play-next').on('click', function() { selectTrack(1); });
+    }
+
+    initPlayer();
+});
+</script>
+</body>
+</html>
