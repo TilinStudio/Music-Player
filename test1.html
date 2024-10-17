@@ -44,20 +44,20 @@
             display: block;
             width: 0; 
             height: 0; 
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 25px solid white; /* Triangle for play */
+            border-left: 10px solid transparent; /* Adjusted size */
+            border-right: 10px solid transparent; /* Adjusted size */
+            border-bottom: 20px solid white; /* Adjusted size */
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) rotate(-90deg); /* Center and rotate */
+            transform: translate(-50%, -50%) rotate(180deg); /* Center and rotate */
         }
 
         .pause::before, .pause::after {
             content: '';
             display: block;
-            width: 8px; /* Width of the pause bars */
-            height: 25px; /* Height of the pause bars */
+            width: 6px; /* Width of the pause bars adjusted */
+            height: 20px; /* Height of the pause bars adjusted */
             background-color: white; /* Change color to white */
             position: absolute;
             left: 50%;
@@ -69,7 +69,7 @@
         }
 
         .pause::after {
-            top: 70%; /* Position of the second bar */
+            top: 50%; /* Position of the second bar, adjusted for centering */
         }
     </style>
 </head>
@@ -84,7 +84,7 @@
             const playPauseBtn = document.getElementById('playPauseBtn');
 
             // Remplacez cette URL par celle de votre fichier audio .mp3
-            const audioUrl = 'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3'; // Insérez ici le lien direct vers le fichier audio .mp3
+            const audioUrl = 'URL_DU_FICHIER_MP3'; // Insérez ici le lien direct vers le fichier audio .mp3
 
             audio.src = audioUrl; // Définit la source audio
 
