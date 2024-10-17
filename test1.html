@@ -20,8 +20,8 @@
             height: 100px; /* Height of the player */
             border-radius: 10px;
             display: flex;
-            flex-direction: column; /* Column layout */
-            justify-content: center;
+            flex-direction: row; /* Row layout for buttons */
+            justify-content: space-around; /* Space buttons evenly */
             align-items: center;
             position: relative; /* For positioning buttons */
         }
@@ -35,7 +35,6 @@
             width: 30px; /* Fixed width for buttons */
             height: 30px; /* Fixed height for buttons */
             position: relative;
-            margin: 5px; /* Margin for spacing */
         }
 
         button:hover {
@@ -109,9 +108,9 @@
 </head>
 <body>
     <div class="player">
-        <button id="prevBtn" class="prev"></button> <!-- Button for previous track -->
+        <button id="prevBtn" class="prev" style="margin-right: 20px;"></button> <!-- Button for previous track -->
         <button id="playPauseBtn" class="play"></button> <!-- Initial button state is Play -->
-        <button id="nextBtn" class="next"></button> <!-- Button for next track -->
+        <button id="nextBtn" class="next" style="margin-left: 20px;"></button> <!-- Button for next track -->
         <audio id="audio" preload="auto"></audio>
     </div>
     <script>
