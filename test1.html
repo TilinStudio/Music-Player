@@ -86,21 +86,42 @@
             const audio = document.getElementById('audio');
             const playPauseBtn = document.getElementById('playPauseBtn');
 
-            // Remplacez cette URL par celle de votre fichier audio .mp3
-            const audioUrl = 'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3'; // Insérez ici le lien direct vers le fichier audio .mp3
+            // Remplacez ces URLs par celles de votre playlist audio .mp3
+            const audioUrls = [
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3', // Remplacez avec les liens directs vers vos fichiers audio
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'Uhttps://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+            ];
 
-            audio.src = audioUrl; // Définit la source audio
+            let currentTrack = 0; // Track index
+
+            audio.src = audioUrls[currentTrack]; // Set initial audio source
 
             playPauseBtn.addEventListener('click', () => {
                 if (audio.paused) {
                     audio.play();
                     playPauseBtn.classList.remove('play');
-                    playPauseBtn.classList.add('pause'); // Change le bouton en Pause
+                    playPauseBtn.classList.add('pause'); // Change the button to Pause
                 } else {
                     audio.pause();
                     playPauseBtn.classList.remove('pause');
-                    playPauseBtn.classList.add('play'); // Change le bouton en Play
+                    playPauseBtn.classList.add('play'); // Change the button to Play
                 }
+            });
+
+            audio.addEventListener('ended', () => {
+                currentTrack = (currentTrack + 1) % audioUrls.length; // Go to next track
+                audio.src = audioUrls[currentTrack]; // Update audio source
+                audio.play(); // Play next track
+                playPauseBtn.classList.remove('play');
+                playPauseBtn.classList.add('pause'); // Change the button to Pause
             });
         });
     </script>
