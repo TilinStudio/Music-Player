@@ -24,20 +24,54 @@
         button {
             background-color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 24px;
-            border-radius: 5px;
+            padding: 15px 20px;
             cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 5px;
+            outline: none;
+            position: relative;
         }
 
         button:hover {
             background-color: #ddd;
         }
+
+        .play::before {
+            content: '';
+            display: inline-block;
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid black; /* Triangle for play */
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pause::before, .pause::after {
+            content: '';
+            display: inline-block;
+            width: 8px; /* Width of the pause bars */
+            height: 25px; /* Height of the pause bars */
+            background-color: black;
+            margin: 0 5px; /* Space between bars */
+        }
+
+        .pause {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none; /* Hides the play or pause button */
+        }
     </style>
 </head>
 <body>
     <div class="player">
-        <button id="playPauseBtn" class="play">▶️</button>
+        <button id="playPauseBtn" class="play"></button> <!-- Initial button state is Play -->
         <audio id="audio" preload="auto"></audio>
     </div>
     <script>
@@ -45,19 +79,20 @@
             const audio = document.getElementById('audio');
             const playPauseBtn = document.getElementById('playPauseBtn');
 
-            // Remplacez cette URL par celle de votre live YouTube
-            const liveUrl = 'https://www.youtube.com/watch?v=rPjez8z61rI'; // Insérez ici l'URL du live YouTube
+            // Remplacez cette URL par celle de votre fichier audio .mp3
+            const audioUrl = 'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3'; // Insérez ici le lien direct vers le fichier audio .mp3
 
-            // Remplacez l'URL de l'audio avec le bon format de flux
-            audio.src = `https://www.youtube.com/watch?v=${liveUrl.split('v=')[1]}`;
+            audio.src = audioUrl; // Définit la source audio
 
             playPauseBtn.addEventListener('click', () => {
                 if (audio.paused) {
                     audio.play();
-                    playPauseBtn.textContent = '⏸️'; // Change le bouton en pause
+                    playPauseBtn.classList.remove('play');
+                    playPauseBtn.classList.add('pause'); // Change le bouton en Pause
                 } else {
                     audio.pause();
-                    playPauseBtn.textContent = '▶️'; // Change le bouton en play
+                    playPauseBtn.classList.remove('pause');
+                    playPauseBtn.classList.add('play'); // Change le bouton en Play
                 }
             });
         });
