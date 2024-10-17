@@ -53,23 +53,26 @@
             transform: translate(-50%, -50%) rotate(90deg); /* Center and rotate triangle */
         }
 
-        .pause::before, .pause::after {
+        .pause::before {
             content: '';
             display: block;
-            width: 6px; /* Width of the pause bars */
-            height: 20px; /* Height of the pause bars */
+            width: 8px; /* Width of the pause bars */
+            height: 100%; /* Full height of the button */
             background-color: white; /* Change color to white */
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%); /* Center bars horizontally */
-        }
-
-        .pause::before {
-            top: 25%; /* Position of the first bar, adjusted for centering */
+            left: 25%; /* Position of the first bar */
+            top: 0; /* Align with the top */
         }
 
         .pause::after {
-            top: 55%; /* Position of the second bar, adjusted for centering */
+            content: '';
+            display: block;
+            width: 8px; /* Width of the pause bars */
+            height: 100%; /* Full height of the button */
+            background-color: white; /* Change color to white */
+            position: absolute;
+            right: 25%; /* Position of the second bar */
+            top: 0; /* Align with the top */
         }
     </style>
 </head>
