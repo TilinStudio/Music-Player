@@ -30,8 +30,8 @@
             padding: 0; /* No padding */
             cursor: pointer;
             outline: none;
-            width: 50px; /* Fixed width for the buttons */
-            height: 50px; /* Fixed height for the buttons */
+            width: 30px; /* Fixed width for buttons */
+            height: 30px; /* Fixed height for buttons */
             position: relative;
         }
 
@@ -44,32 +44,32 @@
             display: block;
             width: 0; 
             height: 0; 
-            border-left: 10px solid transparent; /* Adjusted size */
-            border-right: 10px solid transparent; /* Adjusted size */
-            border-bottom: 20px solid white; /* Adjusted size */
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid white; /* Triangle for play */
             position: absolute;
             left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) rotate(180deg); /* Center and rotate */
+            transform: translate(-50%, -50%) rotate(90deg); /* Center and rotate triangle */
         }
 
         .pause::before, .pause::after {
             content: '';
             display: block;
-            width: 6px; /* Width of the pause bars adjusted */
-            height: 20px; /* Height of the pause bars adjusted */
+            width: 6px; /* Width of the pause bars */
+            height: 20px; /* Height of the pause bars */
             background-color: white; /* Change color to white */
             position: absolute;
             left: 50%;
-            transform: translateX(-50%); /* Center the bars horizontally */
+            transform: translateX(-50%); /* Center bars horizontally */
         }
 
         .pause::before {
-            top: 30%; /* Position of the first bar */
+            top: 20%; /* Position of the first bar */
         }
 
         .pause::after {
-            top: 50%; /* Position of the second bar, adjusted for centering */
+            top: 60%; /* Position of the second bar */
         }
     </style>
 </head>
@@ -84,7 +84,7 @@
             const playPauseBtn = document.getElementById('playPauseBtn');
 
             // Remplacez cette URL par celle de votre fichier audio .mp3
-            const audioUrl = 'URL_DU_FICHIER_MP3'; // Insérez ici le lien direct vers le fichier audio .mp3
+            const audioUrl = 'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3'; // Insérez ici le lien direct vers le fichier audio .mp3
 
             audio.src = audioUrl; // Définit la source audio
 
