@@ -35,6 +35,8 @@
             width: 40px; /* Fixed width for buttons */
             height: 40px; /* Fixed height for buttons */
             position: relative;
+            font-size: 30px; /* Size for symbols */
+            color: white; /* Color of symbols */
         }
 
         button:hover {
@@ -42,39 +44,27 @@
         }
 
         .play::before {
-            content: '';
-            display: block;
-            width: 0; 
-            height: 0; 
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 20px solid white; /* Triangle for play */
+            content: '▶️'; /* Symbol for play */
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotate(90deg); /* Center and rotate triangle */
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center; /* Center the symbol */
+            align-items: center; /* Center the symbol */
         }
 
         .pause::before {
-            content: '';
-            display: block;
-            width: 8px; /* Width of the pause bars */
-            height: 100%; /* Full height of the button */
-            background-color: white; /* Change color to white */
+            content: '⏸️'; /* Symbol for pause */
             position: absolute;
-            left: 0; /* Position of the first bar at the left edge */
-            top: 0; /* Align with the top */
-        }
-
-        .pause::after {
-            content: '';
-            display: block;
-            width: 8px; /* Width of the pause bars */
-            height: 100%; /* Full height of the button */
-            background-color: white; /* Change color to white */
-            position: absolute;
-            right: 0; /* Position of the second bar at the right edge */
-            top: 0; /* Align with the top */
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center; /* Center the symbol */
+            align-items: center; /* Center the symbol */
         }
 
         .prev::before {
