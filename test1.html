@@ -78,7 +78,7 @@
         }
 
         .prev::before {
-            content: '◃◃'; /* Symbol for previous */
+            content: '⏮'; /* Symbol for previous */
             font-size: 30px; /* Adjust size as needed */
             color: white; /* Color of the symbol */
             position: absolute;
@@ -87,13 +87,13 @@
             width: 100%; /* Full width of button */
             height: 100%; /* Full height of button */
             display: flex;
-            justify-content: space-between; /* Space between the arrows */
+            justify-content: center; /* Center the symbol */
             align-items: center;
-            transform: rotate(90deg); /* Rotate 90 degrees for left-pointing */
+            font-weight: bold; /* Make symbol bold */
         }
 
         .next::before {
-            content: '▹▹'; /* Symbol for next */
+            content: '⏭'; /* Symbol for next */
             font-size: 30px; /* Adjust size as needed */
             color: white; /* Color of the symbol */
             position: absolute;
@@ -102,9 +102,9 @@
             width: 100%; /* Full width of button */
             height: 100%; /* Full height of button */
             display: flex;
-            justify-content: space-between; /* Space between the arrows */
+            justify-content: center; /* Center the symbol */
             align-items: center;
-            transform: rotate(270deg); /* Rotate 270 degrees for right-pointing */
+            font-weight: bold; /* Make symbol bold */
         }
     </style>
 </head>
