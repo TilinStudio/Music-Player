@@ -16,56 +16,57 @@
 
         .player {
             background-color: black;
-            padding: 20px;
+            width: 100px; /* Width of the player */
+            height: 100px; /* Height of the player */
             border-radius: 10px;
-            text-align: center;
-        }
-
-        button {
-            background-color: white;
-            border: none;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-radius: 5px;
-            outline: none;
-            position: relative;
-        }
-
-        button:hover {
-            background-color: #ddd;
-        }
-
-        .play::before {
-            content: '';
-            display: inline-block;
-            width: 0; 
-            height: 0; 
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 25px solid black; /* Triangle for play */
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .pause::before, .pause::after {
-            content: '';
-            display: inline-block;
-            width: 8px; /* Width of the pause bars */
-            height: 25px; /* Height of the pause bars */
-            background-color: black;
-            margin: 0 5px; /* Space between bars */
-        }
-
-        .pause {
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .hidden {
-            display: none; /* Hides the play or pause button */
+        button {
+            background-color: black; /* Same as the player background */
+            border: none;
+            padding: 0; /* No padding */
+            cursor: pointer;
+            outline: none;
+            width: 40px; /* Fixed width */
+            height: 40px; /* Fixed height */
+            position: relative;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background on hover */
+        }
+
+        .play::before {
+            content: '';
+            display: block;
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid white; /* Triangle for play */
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -20%); /* Center the triangle */
+        }
+
+        .pause::before, .pause::after {
+            content: '';
+            display: block;
+            width: 8px; /* Width of the pause bars */
+            height: 25px; /* Height of the pause bars */
+            background-color: white; /* Change color to white */
+            position: absolute;
+        }
+
+        .pause::before {
+            left: 12px; /* Position of the first bar */
+        }
+
+        .pause::after {
+            right: 12px; /* Position of the second bar */
         }
     </style>
 </head>
