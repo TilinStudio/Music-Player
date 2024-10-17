@@ -18,13 +18,14 @@
         .player {
             background-color: black;
             width: 300px; /* Width of the player */
-            height: 130px; /* Height of the player increased to accommodate progress bar */
+            height: 100px; /* Reduced height of the player */
             border-radius: 10px;
             display: flex;
             flex-direction: column; /* Stack buttons and progress bar */
             justify-content: center;
             align-items: center;
             position: relative; /* For positioning buttons */
+            padding: 10px 0; /* Add padding to maintain spacing */
         }
 
         .controls {
@@ -181,16 +182,16 @@
 
             // Remplacez ces URLs par celles de votre playlist audio .mp3
             const audioUrls = [
-                'URL_DU_FICHIER_1.mp3', // Remplacez avec les liens directs vers vos fichiers audio
-                'URL_DU_FICHIER_2.mp3',
-                'URL_DU_FICHIER_3.mp3',
-                'URL_DU_FICHIER_4.mp3',
-                'URL_DU_FICHIER_5.mp3',
-                'URL_DU_FICHIER_6.mp3',
-                'URL_DU_FICHIER_7.mp3',
-                'URL_DU_FICHIER_8.mp3',
-                'URL_DU_FICHIER_9.mp3',
-                'URL_DU_FICHIER_10.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3', // Remplacez avec les liens directs vers vos fichiers audio
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
             ];
 
             let currentTrack = 0; // Track index
