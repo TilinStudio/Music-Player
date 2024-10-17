@@ -56,22 +56,22 @@
         .pause::before {
             content: '';
             display: block;
-            width: 4px; /* Finer width for the pause bars */
+            width: 8px; /* Width of the pause bars */
             height: 100%; /* Full height of the button */
             background-color: white; /* Change color to white */
             position: absolute;
-            left: 25%; /* Position of the first bar */
+            left: 0; /* Position of the first bar at the left edge */
             top: 0; /* Align with the top */
         }
 
         .pause::after {
             content: '';
             display: block;
-            width: 4px; /* Finer width for the pause bars */
+            width: 8px; /* Width of the pause bars */
             height: 100%; /* Full height of the button */
             background-color: white; /* Change color to white */
             position: absolute;
-            right: 25%; /* Position of the second bar */
+            right: 0; /* Position of the second bar at the right edge */
             top: 0; /* Align with the top */
         }
     </style>
