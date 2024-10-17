@@ -17,7 +17,7 @@
 
         .player {
             background-color: black;
-            width: 270px; /* Augmenté la largeur du player */
+            width: 270px; /* Largeur du player */
             height: 80px; /* Hauteur maintenue */
             border-radius: 10px;
             display: flex;
@@ -123,11 +123,11 @@
 
         /* Progress bar container */
         .progress-container {
-            width: 220px; /* Augmenté la largeur pour la barre de progression */
-            height: 8px; /* Height of the progress bar */
+            width: 200px; /* Légèrement réduit la largeur pour la barre de progression */
+            height: 6px; /* Épaisseur réduite de la barre de progression */
             background-color: #ddd;
             border-radius: 5px;
-            margin-top: 5px; /* Adjusted margin for spacing */
+            margin-top: 5px; /* Ajustement de l'espacement */
             cursor: pointer;
             position: relative;
         }
@@ -246,7 +246,7 @@
 
             // Automatically play the next track when one ends
             audio.addEventListener('ended', () => {
-                nextBtn.click(); // Simulate a next track click
+                nextBtn.click(); // Simulate a next button click
             });
         });
     </script>
