@@ -78,31 +78,23 @@
         }
 
         .prev::before {
-            content: '';
-            display: block;
-            width: 0; 
-            height: 0; 
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 20px solid white; /* Triangle for previous */
+            content: '⌅'; /* Symbol for previous */
+            font-size: 24px; /* Adjust size as needed */
+            color: white; /* Color of the symbol */
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotate(-90deg); /* Center and rotate triangle */
+            left: 0; /* Align to left */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust vertical centering */
         }
 
         .next::before {
-            content: '';
-            display: block;
-            width: 0; 
-            height: 0; 
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 20px solid white; /* Triangle for next */
+            content: '⌅'; /* Symbol for next */
+            font-size: 24px; /* Adjust size as needed */
+            color: white; /* Color of the symbol */
             position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) rotate(90deg); /* Center and rotate triangle */
+            right: 0; /* Align to right */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%) rotate(180deg); /* Adjust vertical centering and rotate */
         }
     </style>
 </head>
