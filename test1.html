@@ -16,12 +16,14 @@
 
         .player {
             background-color: black;
-            width: 100px; /* Width of the player */
+            width: 200px; /* Width of the player */
             height: 100px; /* Height of the player */
             border-radius: 10px;
             display: flex;
+            flex-direction: column; /* Column layout */
             justify-content: center;
             align-items: center;
+            position: relative; /* For positioning buttons */
         }
 
         button {
@@ -33,6 +35,7 @@
             width: 30px; /* Fixed width for buttons */
             height: 30px; /* Fixed height for buttons */
             position: relative;
+            margin: 5px; /* Margin for spacing */
         }
 
         button:hover {
@@ -74,29 +77,61 @@
             right: 0; /* Position of the second bar at the right edge */
             top: 0; /* Align with the top */
         }
+
+        .prev::before {
+            content: '';
+            display: block;
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid white; /* Triangle for previous */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg); /* Center and rotate triangle */
+        }
+
+        .next::before {
+            content: '';
+            display: block;
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid white; /* Triangle for next */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(90deg); /* Center and rotate triangle */
+        }
     </style>
 </head>
 <body>
     <div class="player">
+        <button id="prevBtn" class="prev"></button> <!-- Button for previous track -->
         <button id="playPauseBtn" class="play"></button> <!-- Initial button state is Play -->
+        <button id="nextBtn" class="next"></button> <!-- Button for next track -->
         <audio id="audio" preload="auto"></audio>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const audio = document.getElementById('audio');
             const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
             // Remplacez ces URLs par celles de votre playlist audio .mp3
             const audioUrls = [
                 'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3', // Remplacez avec les liens directs vers vos fichiers audio
                 'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
                 'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
-                'Uhttps://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
                 'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
-                'https://audio.jukehost.co.uk/ds7mFsow2ALEMkK17TgjojrxUvTFMovI.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
+                'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
                 'https://audio.jukehost.co.uk/qPRzTroF3I71OfblLUIhcUObZLkOiQTx.mp3',
             ];
 
@@ -114,6 +149,22 @@
                     playPauseBtn.classList.remove('pause');
                     playPauseBtn.classList.add('play'); // Change the button to Play
                 }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentTrack = (currentTrack - 1 + audioUrls.length) % audioUrls.length; // Go to previous track
+                audio.src = audioUrls[currentTrack]; // Update audio source
+                audio.play(); // Play previous track
+                playPauseBtn.classList.remove('play');
+                playPauseBtn.classList.add('pause'); // Change the button to Pause
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentTrack = (currentTrack + 1) % audioUrls.length; // Go to next track
+                audio.src = audioUrls[currentTrack]; // Update audio source
+                audio.play(); // Play next track
+                playPauseBtn.classList.remove('play');
+                playPauseBtn.classList.add('pause'); // Change the button to Pause
             });
 
             audio.addEventListener('ended', () => {
