@@ -30,8 +30,8 @@
             padding: 0; /* No padding */
             cursor: pointer;
             outline: none;
-            width: 40px; /* Fixed width */
-            height: 40px; /* Fixed height */
+            width: 50px; /* Fixed width for the buttons */
+            height: 50px; /* Fixed height for the buttons */
             position: relative;
         }
 
@@ -49,7 +49,8 @@
             border-bottom: 25px solid white; /* Triangle for play */
             position: absolute;
             left: 50%;
-            transform: translate(-50%, -20%); /* Center the triangle */
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg); /* Center and rotate */
         }
 
         .pause::before, .pause::after {
@@ -59,14 +60,16 @@
             height: 25px; /* Height of the pause bars */
             background-color: white; /* Change color to white */
             position: absolute;
+            left: 50%;
+            transform: translateX(-50%); /* Center the bars horizontally */
         }
 
         .pause::before {
-            left: 12px; /* Position of the first bar */
+            top: 30%; /* Position of the first bar */
         }
 
         .pause::after {
-            right: 12px; /* Position of the second bar */
+            top: 70%; /* Position of the second bar */
         }
     </style>
 </head>
