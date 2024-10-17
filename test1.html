@@ -38,13 +38,19 @@
             border-radius: 5px; /* Slightly rounded corners */
         }
 
+        /* Hover effect for play/pause */
         button:hover {
             background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background on hover */
         }
 
+        /* Hover effect for changing the icon color */
+        .play:hover::before, .pause:hover::before {
+            color: white; /* Icon turns white on hover */
+        }
+
         .play, .pause {
             background-color: white; /* White background for the play and pause buttons */
-            color: black; /* Black symbol */
+            color: black; /* Black symbol by default */
         }
 
         .prev, .next {
