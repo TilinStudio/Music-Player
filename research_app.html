@@ -64,20 +64,14 @@
     <h1>BOGGA - Fashion Search</h1>
     <p>Importez une photo et choisissez une catégorie pour rechercher des articles similaires.</p>
 
-    <!-- Option to upload an image -->
     <input type="file" id="imageUpload" accept="image/*" />
-    <!-- Select category -->
     <select id="categorySelect">
       <option value="jeans">Jeans</option>
       <option value="t-shirt">T-shirt</option>
       <option value="jacket">Jacket</option>
       <option value="shoes">Shoes</option>
     </select>
-
-    <!-- Button to start the search -->
     <button id="searchButton">Rechercher</button>
-
-    <!-- Section to display the results -->
     <div id="resultsSection"></div>
   </div>
 
@@ -119,7 +113,12 @@
             ],
           }),
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Google Vision API error: ${response.status} - ${response.statusText}`);
+            }
+            return response.json();
+          })
           .then((data) => {
             const resultsSection = document.getElementById('resultsSection');
             resultsSection.innerHTML = '';
@@ -150,7 +149,12 @@
 
               // Call SERP API to get similar products
               fetch(`https://serpapi.com/search.json?q=${category} ${filteredLabels[0].description}&api_key=${serpApiKey}`)
-                .then((response) => response.json())
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(`SERP API error: ${response.status} - ${response.statusText}`);
+                  }
+                  return response.json();
+                })
                 .then((serpData) => {
                   serpData.products.forEach(product => {
                     const serpResultDiv = document.createElement('div');
@@ -166,12 +170,13 @@
                 })
                 .catch((error) => {
                   console.error('Erreur avec SERP API:', error);
+                  alert(`Erreur lors de la recherche de produits similaires: ${error.message}`);
                 });
             }
           })
           .catch((error) => {
             console.error('Erreur avec Google Vision API:', error);
-            alert('Erreur lors de la recherche.');
+            alert(`Erreur lors de la recherche: ${error.message}`);
           });
       };
 
