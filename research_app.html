@@ -1,0 +1,60 @@
+https://serpapi.com/search.json?engine=google_lens&url=https://i.imgur.com/Jydn4Wb.jpeg
+require 'google_search_results' 
+
+params = {
+  engine: "google_lens",
+  url: "https://i.imgur.com/Jydn4Wb.jpeg",
+  api_key: "secret_api_key"
+}
+
+search = GoogleSearch.new(params)
+knowledge_graph = search.get_hash[:knowledge_graph]
+{
+  ...
+  "knowledge_graph": [
+    {
+      "title": "Apple AirPods Max",
+      "rating": 4.6,
+      "reviews": 15,
+      "link": "https://www.google.com/search?q=Apple+AirPods+Max&kgmid=/g/11ll63vy_y&source=.lens.button&hl=en-US&gl=US",
+      "images": [
+        {
+          "title": "Image for Apple AirPods Max",
+          "source": "https://www.google.com/imgres?h=500&w=435&tbnh=241&tbnw=209&osm=1&hcb=1&source=lens-native&usg=AI4_-kRt4d1eQBzaFjNtgGmO5xaDlolzZw&imgurl=https://encrypted-tbn2.gstatic.com/images?q%3Dtbn:ANd9GcS9UFvH2to2PvFhp5CrmifSUdKwlClUt4Aj6jykSBch6F_ob8Qa&imgrefurl=https://www.cashconverters.co.uk/shop/music-tv--video/headphones--portable-equipment/headphones/headphones---cordless/016500219491&tbnid=DgYaYOFV5bsQiM&docid=YqrTN6BEi2yatM&hcb=1",
+          "link": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQNsBXB9NwfiYLfWOCkUx3ZRPbwh6WAcUw5oMn9i6I8IKi3UwXV",
+          "size": {
+            "width": 209,
+            "height": 241
+          }
+        }
+      ],
+      "shopping_results": [
+        {
+          "source": "Sweetwater",
+          "source_logo": "https://encrypted-tbn2.gstatic.com/favicon-tbn?q=tbn:ANd9GcQ3j4Wus8gSlKXY2uMAIGxNU7kLWV19YgObpZloYUWeSbPwza8aMyzluMx1vi6KV88mn0uJg9K7bxC3SsFhBWGNQs2fYU_45QuOdjHM4PMywJV9Jtyk0HQ",
+          "price": "$549.00",
+          "extracted_price": 549,
+          "link": "https://www.sweetwater.com/store/detail/AirPodsMaxGr--apple-airpods-max-over-ear-bluetooth-headphone-space-gray",
+          "snippet": "1st offer for $549.00 from Sweetwater"
+        },
+        {
+          "source": "Best Buy",
+          "source_logo": "https://encrypted-tbn1.gstatic.com/favicon-tbn?q=tbn:ANd9GcQRElpIn0_ngPFmOJ5ZdW65M7G4nuI9MycoEeMitUDh35QpZN3krTU2tf03QRaenlaJn4hTIdv1gBd0yWlFCTuep64IeIo7wzb0RKajGmDwhoSbHbc",
+          "price": "$499.99",
+          "extracted_price": 499.99,
+          "link": "https://www.bestbuy.com/site/apple-airpods-max-space-gray/6373460.p?skuId=6373460",
+          "snippet": "2nd offer for $499.99 from Best Buy"
+        },
+        {
+          "source": "Amazon.com",
+          "source_logo": "https://encrypted-tbn1.gstatic.com/favicon-tbn?q=tbn:ANd9GcRm4oMDPHDSWBDQhB5-csYIdmVde_ZfnfUYnfzlJJ9w7zjXG34H4SL9TXI2H8XWInsqPagyhBQjtImrHgLv9Bwvw_d2JvfjMfz3ox9yR82MKQ7yrQ",
+          "price": "$36.99",
+          "extracted_price": 36.99,
+                    "link": "https://www.amazon.com/Replacement-Earpads-Protein-Compatible-Headphones/dp/B09H4LQGQY",
+          "snippet": "3rd offer for $36.99 from Amazon.com"
+        }
+      ]
+    }
+  ],
+  ...
+}
