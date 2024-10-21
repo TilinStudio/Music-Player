@@ -1,188 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BOGGA - Fashion Search</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #2E2E2E;
-      color: #FFF;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
-      text-align: center;
-      max-width: 500px;
-      padding: 20px;
-      border-radius: 8px;
-      background-color: #444;
-    }
-
-    h1 {
-      color: #F5A623;
-    }
-
-    input[type="file"], select, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    button {
-      background-color: #F5A623;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #d48e1b;
-    }
-
-    .result {
-      background-color: #333;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 5px;
-    }
-
-    .result p {
-      margin: 5px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOGGA - Recherche de Mode</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+        }
+        select {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #777;
+        }
+        .product {
+            background: #444;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>BOGGA - Fashion Search</h1>
-    <p>Importez une photo et choisissez une catégorie pour rechercher des articles similaires.</p>
+    <h1>Bienvenue sur BOGGA</h1>
+    <div id="container">
+        <input type="file" id="imageInput" accept="image/*" required>
+        <select id="categorySelect">
+            <option value="">Sélectionnez une catégorie</option>
+            <option value="vêtements">Vêtements</option>
+            <option value="chaussures">Chaussures</option>
+            <option value="accessoires">Accessoires</option>
+        </select>
+        <button id="searchButton">Rechercher des articles similaires</button>
+        <div id="results"></div>
+    </div>
 
-    <input type="file" id="imageUpload" accept="image/*" />
-    <select id="categorySelect">
-      <option value="jeans">Jeans</option>
-      <option value="t-shirt">T-shirt</option>
-      <option value="jacket">Jacket</option>
-      <option value="shoes">Shoes</option>
-    </select>
-    <button id="searchButton">Rechercher</button>
-    <div id="resultsSection"></div>
-  </div>
+    <script>
+        const apiKey = "AIzaSyA8i0ALg35OzJzM2mnIKTI4z9JeiZUFXcc"; // Remplacez par votre clé API Google Vision
+        const searchApiKey = "caf7996d3cdcb932c1fee0158096b5a284fff403b586b9378b2183382e5550a1"; // Remplacez par votre clé API SERP
 
-  <script>
-    document.getElementById('searchButton').addEventListener('click', function () {
-      const visionApiKey = 'AIzaSyA8i0ALg35OzJzM2mnIKTI4z9JeiZUFXcc'; // Remplace ici par ta clé API Google Vision
-      const serpApiKey = 'caf7996d3cdcb932c1fee0158096b5a284fff403b586b9378b2183382e5550a1'; // Remplace ici par ta clé API SERP
-      const fileInput = document.getElementById('imageUpload');
-      const category = document.getElementById('categorySelect').value;
+        document.getElementById('searchButton').addEventListener('click', async () => {
+            const imageInput = document.getElementById('imageInput');
+            const category = document.getElementById('categorySelect').value;
 
-      if (fileInput.files.length === 0) {
-        alert('Veuillez importer une image.');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        const base64Image = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
-
-        // Call Google Vision API
-        fetch(`https://vision.googleapis.com/v1/images:annotate?key=${visionApiKey}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            requests: [
-              {
-                image: {
-                  content: base64Image,
-                },
-                features: [
-                  {
-                    type: 'LABEL_DETECTION',
-                    maxResults: 10,
-                  },
-                ],
-              },
-            ],
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Google Vision API error: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            const resultsSection = document.getElementById('resultsSection');
-            resultsSection.innerHTML = '';
-
-            const labels = data.responses[0].labelAnnotations;
-            if (!labels || labels.length === 0) {
-              resultsSection.innerHTML = '<p>Aucun résultat trouvé.</p>';
-              return;
+            if (imageInput.files.length === 0 || !category) {
+                alert("Veuillez sélectionner une image et une catégorie.");
+                return;
             }
 
-            const filteredLabels = labels.filter((label) =>
-              label.description.toLowerCase().includes(category.toLowerCase())
-            );
+            const reader = new FileReader();
+            reader.onload = async () => {
+                const imageBase64 = reader.result.split(',')[1];
+                await searchSimilarProducts(imageBase64, category);
+            };
+            reader.readAsDataURL(imageInput.files[0]);
+        });
 
-            if (filteredLabels.length === 0) {
-              resultsSection.innerHTML = '<p>Aucun résultat pertinent trouvé pour cette catégorie.</p>';
-            } else {
-              filteredLabels.forEach((label) => {
-                const resultDiv = document.createElement('div');
-                resultDiv.classList.add('result');
-                resultDiv.innerHTML = `
-                  <p><strong>Marque:</strong> ${label.description}</p>
-                  <p><strong>Score:</strong> ${(label.score * 100).toFixed(2)}%</p>
-                  <p><strong>Matériaux:</strong> Information indisponible</p>
-                `;
-                resultsSection.appendChild(resultDiv);
-              });
-
-              // Call SERP API to get similar products
-              fetch(`https://serpapi.com/search.json?q=${category} ${filteredLabels[0].description}&api_key=${serpApiKey}`)
-                .then((response) => {
-                  if (!response.ok) {
-                    throw new Error(`SERP API error: ${response.status} - ${response.statusText}`);
-                  }
-                  return response.json();
-                })
-                .then((serpData) => {
-                  serpData.products.forEach(product => {
-                    const serpResultDiv = document.createElement('div');
-                    serpResultDiv.classList.add('result');
-                    serpResultDiv.innerHTML = `
-                      <img src="${product.image}" alt="${product.title}" style="max-width: 100%; border-radius: 5px;">
-                      <p><strong>Marque:</strong> ${product.brand}</p>
-                      <p><strong>Prix:</strong> ${product.price}</p>
-                      <p><strong>Matériaux:</strong> ${product.materials || 'Information indisponible'}</p>
-                    `;
-                    resultsSection.appendChild(serpResultDiv);
-                  });
-                })
-                .catch((error) => {
-                  console.error('Erreur avec SERP API:', error);
-                  alert(`Erreur lors de la recherche de produits similaires: ${error.message}`);
+        async function searchSimilarProducts(imageBase64, category) {
+            try {
+                // Appel à l'API Google Vision
+                const visionResponse = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        requests: [{
+                            image: { content: imageBase64 },
+                            features: [{ type: 'LABEL_DETECTION', maxResults: 10 }]
+                        }]
+                    })
                 });
+
+                if (!visionResponse.ok) {
+                    throw new Error(`Google Vision API error: ${visionResponse.status}`);
+                }
+
+                const visionData = await visionResponse.json();
+                const labels = visionData.responses[0].labelAnnotations;
+
+                // Recherche de produits similaires
+                const similarProductsResponse = await fetch(`https://api.serpapi.com/search.json?engine=google_shopping&q=${labels[0].description}&api_key=${searchApiKey}`);
+
+                if (!similarProductsResponse.ok) {
+                    throw new Error(`Product search API error: ${similarProductsResponse.status}`);
+                }
+
+                const productsData = await similarProductsResponse.json();
+                displayProducts(productsData);
+
+            } catch (error) {
+                console.error("Erreur lors de la recherche de produits similaires:", error);
+                alert("Erreur lors de la recherche de produits similaires : " + error.message);
             }
-          })
-          .catch((error) => {
-            console.error('Erreur avec Google Vision API:', error);
-            alert(`Erreur lors de la recherche: ${error.message}`);
-          });
-      };
+        }
 
-      reader.readAsDataURL(fileInput.files[0]);
-    });
-  </script>
+        function displayProducts(productsData) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Réinitialise les résultats précédents
 
+            // Afficher chaque produit similaire
+            productsData.products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                    <img src="${product.thumbnail}" alt="${product.title}">
+                    <h3>${product.brand}</h3>
+                    <p>Prix: ${product.price}</p>
+                    <p>Matériaux: ${product.materials || 'N/A'}</p>
+                `;
+                resultsDiv.appendChild(productDiv);
+            });
+        }
+    </script>
 </body>
 </html>
