@@ -1,60 +1,232 @@
-https://serpapi.com/search.json?engine=google_lens&url=https://i.imgur.com/Jydn4Wb.jpeg
-require 'google_search_results' 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOGGA - Shazam de la Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-params = {
-  engine: "google_lens",
-  url: "https://i.imgur.com/Jydn4Wb.jpeg",
-  api_key: "secret_api_key"
+    <header>
+        <h1>BOGGA</h1>
+        <p>Votre assistant mode personnel</p>
+    </header>
+
+    <main>
+        <section class="upload-section">
+            <h2>Importez une photo de votre tenue</h2>
+            <div class="upload-container">
+                <input type="file" id="uploadInput" accept="image/*">
+                <canvas id="imageCanvas"></canvas>
+                <button id="analyzeButton">Analyser l'image</button>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <h2>Articles similaires trouvés</h2>
+            <div id="resultsContainer" class="results-container">
+                <!-- Les résultats de recherche seront affichés ici -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BOGGA - Shazam de la Mode</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-search = GoogleSearch.new(params)
-knowledge_graph = search.get_hash[:knowledge_graph]
-{
-  ...
-  "knowledge_graph": [
-    {
-      "title": "Apple AirPods Max",
-      "rating": 4.6,
-      "reviews": 15,
-      "link": "https://www.google.com/search?q=Apple+AirPods+Max&kgmid=/g/11ll63vy_y&source=.lens.button&hl=en-US&gl=US",
-      "images": [
-        {
-          "title": "Image for Apple AirPods Max",
-          "source": "https://www.google.com/imgres?h=500&w=435&tbnh=241&tbnw=209&osm=1&hcb=1&source=lens-native&usg=AI4_-kRt4d1eQBzaFjNtgGmO5xaDlolzZw&imgurl=https://encrypted-tbn2.gstatic.com/images?q%3Dtbn:ANd9GcS9UFvH2to2PvFhp5CrmifSUdKwlClUt4Aj6jykSBch6F_ob8Qa&imgrefurl=https://www.cashconverters.co.uk/shop/music-tv--video/headphones--portable-equipment/headphones/headphones---cordless/016500219491&tbnid=DgYaYOFV5bsQiM&docid=YqrTN6BEi2yatM&hcb=1",
-          "link": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQNsBXB9NwfiYLfWOCkUx3ZRPbwh6WAcUw5oMn9i6I8IKi3UwXV",
-          "size": {
-            "width": 209,
-            "height": 241
-          }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+header h1 {
+    font-size: 3rem;
+}
+
+header p {
+    font-size: 1.2rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.upload-section {
+    text-align: center;
+}
+
+.upload-container {
+    margin-top: 20px;
+}
+
+#uploadInput {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+canvas {
+    display: none;
+    margin-top: 20px;
+    border: 2px solid #4CAF50;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.results-section {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 40px;
+}
+
+.results-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.result-item {
+    background-color: white;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.result-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.result-item h3 {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #4CAF50;
+}
+
+.result-item p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+document.getElementById('analyzeButton').addEventListener('click', function() {
+    const input = document.getElementById('uploadInput');
+    const canvas = document.getElementById('imageCanvas');
+    const context = canvas.getContext('2d');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                canvas.style.display = 'block';
+                canvas.width = img.width;
+                canvas.height = img.height;
+                context.drawImage(img, 0, 0);
+
+                analyzeImage(canvas); // Analyse l'image après le rendu sur le canvas
+            }
+            img.src = e.target.result;
         }
-      ],
-      "shopping_results": [
-        {
-          "source": "Sweetwater",
-          "source_logo": "https://encrypted-tbn2.gstatic.com/favicon-tbn?q=tbn:ANd9GcQ3j4Wus8gSlKXY2uMAIGxNU7kLWV19YgObpZloYUWeSbPwza8aMyzluMx1vi6KV88mn0uJg9K7bxC3SsFhBWGNQs2fYU_45QuOdjHM4PMywJV9Jtyk0HQ",
-          "price": "$549.00",
-          "extracted_price": 549,
-          "link": "https://www.sweetwater.com/store/detail/AirPodsMaxGr--apple-airpods-max-over-ear-bluetooth-headphone-space-gray",
-          "snippet": "1st offer for $549.00 from Sweetwater"
-        },
-        {
-          "source": "Best Buy",
-          "source_logo": "https://encrypted-tbn1.gstatic.com/favicon-tbn?q=tbn:ANd9GcQRElpIn0_ngPFmOJ5ZdW65M7G4nuI9MycoEeMitUDh35QpZN3krTU2tf03QRaenlaJn4hTIdv1gBd0yWlFCTuep64IeIo7wzb0RKajGmDwhoSbHbc",
-          "price": "$499.99",
-          "extracted_price": 499.99,
-          "link": "https://www.bestbuy.com/site/apple-airpods-max-space-gray/6373460.p?skuId=6373460",
-          "snippet": "2nd offer for $499.99 from Best Buy"
-        },
-        {
-          "source": "Amazon.com",
-          "source_logo": "https://encrypted-tbn1.gstatic.com/favicon-tbn?q=tbn:ANd9GcRm4oMDPHDSWBDQhB5-csYIdmVde_ZfnfUYnfzlJJ9w7zjXG34H4SL9TXI2H8XWInsqPagyhBQjtImrHgLv9Bwvw_d2JvfjMfz3ox9yR82MKQ7yrQ",
-          "price": "$36.99",
-          "extracted_price": 36.99,
-                    "link": "https://www.amazon.com/Replacement-Earpads-Protein-Compatible-Headphones/dp/B09H4LQGQY",
-          "snippet": "3rd offer for $36.99 from Amazon.com"
-        }
-      ]
+        reader.readAsDataURL(input.files[0]);
     }
-  ],
-  ...
+});
+
+function analyzeImage(canvas) {
+    const apiKey = 'AIzaSyA8i0ALg35OzJzM2mnIKTI4z9JeiZUFXcc';  // Remplacez par votre clé d'API Google Cloud Vision
+    const imageData = canvas.toDataURL('image/png').split(',')[1];
+
+    fetch(`https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`, {
+        method: 'POST',
+        body: JSON.stringify({
+            requests: [{
+                image: { content: imageData },
+                features: [{ type: 'LABEL_DETECTION', maxResults: 5 }]
+            }]
+        }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const labels = data.responses[0].labelAnnotations;
+        const searchQuery = labels[0].description;
+        fetchSimilarItems(searchQuery);  // Recherche des articles similaires
+    })
+    .catch(err => console.error('Erreur:', err));
+}
+
+function fetchSimilarItems(query) {
+    const apiKey = 'caf7996d3cdcb932c1fee0158096b5a284fff403b586b9378b2183382e5550a1';  // Remplacez par votre clé SerpAPI
+    const url = `https://serpapi.com/search.json?q=${query}+clothing&tbm=shop&api_key=${apiKey}`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        const resultsContainer = document.getElementById('resultsContainer');
+        resultsContainer.innerHTML = '';
+
+        const items = data.shopping_results;
+        items.forEach(item => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+
+            resultItem.innerHTML = `
+                <img src="${item.thumbnail}" alt="${item.title}">
+                <h3>${item.source}</h3>
+                <p>${item.price}</p>
+                <p>${item.material ? item.material : 'Matériau non spécifié'}</p>
+            `;
+            resultsContainer.appendChild(resultItem);
+        });
+    })
+    .catch(err => console.error('Erreur lors de la recherche des articles:', err));
 }
